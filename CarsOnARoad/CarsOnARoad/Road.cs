@@ -14,7 +14,7 @@ namespace CarsOnARoad
         {
             { "AB12CDE", new Car("Ford", "Focus", "Blue", 180, 70) },
             { "XY34ZRT", new Car("BMW", "320i", "Green", 200, 90 ) },
-            { "LM56OPQ", new Car("Toyota", "Corolla", "Silver", 160, 60) },
+            { "LM56OPQ", new Car("Toyota", "Corolla", "Silver", 80, 60) },
             { "GH78JKL", new Car("Audi", "A4", "Black", 220, 100 ) }
         };
 

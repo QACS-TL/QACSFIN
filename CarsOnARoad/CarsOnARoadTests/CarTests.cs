@@ -15,12 +15,12 @@ namespace CarsOnARoadTests
 
             // Assert
             Assert.NotNull(c);
-            Assert.Equal(0, c.speed);
-            Assert.Equal(4, c.wheelCount);
-            Assert.Equal(120, c.topSpeed);
+            Assert.Equal(0, c.Speed);
+            Assert.Equal(4, c.WheelCount);
+            Assert.Equal(120, c.TopSpeed);
             Assert.Equal("Black", c.Colour);
-            Assert.Equal("Generic Car", c.make);
-            Assert.Equal("Model X", c.model);
+            Assert.Equal("Generic Car", c.Make);
+            Assert.Equal("Model X", c.Model);
         }
     }
 }

@@ -81,11 +81,11 @@
         {
             return "Beep beep!";
         }
-        
-        //public override string ToString()
-        //{
-        //    return $"{Colour} {Make} {Model} | Top Speed: {TopSpeed} | Current Speed: {Speed}";
-        //}
+
+        public override string ToString()
+        {
+            return $"{Colour} {Make} {Model} | {this.GetType().Name} | Top Speed: {TopSpeed} | Current Speed: {Speed}";
+        }
 
 
     }

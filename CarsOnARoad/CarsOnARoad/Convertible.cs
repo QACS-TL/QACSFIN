@@ -66,5 +66,10 @@ namespace CarsOnARoad
             }
         }
 
+        public override string ToString()
+        {
+            return $"{base.ToString()} | {(IsTopUp ? "Top up" : "Top down")}";
+        }
+
     }
 }

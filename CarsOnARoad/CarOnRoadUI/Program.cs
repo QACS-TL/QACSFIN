@@ -17,18 +17,13 @@ namespace CarsOnRoad
 
         static void AttemptOvertake()
         {
-            DisplayRoad();
-
-            Console.Write("\nEnter car registration: ");
-            string plate = Console.ReadLine().Trim();
-
-            if (!road.carsOnRoad.Contains(plate))
+            string plate;
+            int index;
+            bool isValidCar = SelectCar(out plate, out index);
+            if (!isValidCar)
             {
-                Console.WriteLine("Car not found.");
                 return;
             }
-
-            int index = road.carsOnRoad.IndexOf(plate);
 
             if (index == 0)
             {
@@ -45,6 +40,60 @@ namespace CarsOnRoad
             Console.WriteLine(road.AttemptOvertake(plate, index, frontPlate, car, frontCar));
 
             DisplayRoad();
+        }
+
+        private static bool SelectCar(out string plate, out int index)
+        {
+            DisplayRoad();
+
+            Console.Write("\nEnter car registration: ");
+            plate = Console.ReadLine().Trim();
+            if (!road.carsOnRoad.Contains(plate))
+            {
+                Console.WriteLine("Car not found.");
+                index = -1;
+                return false;
+            }
+
+            index = road.carsOnRoad.IndexOf(plate);
+            return true;
+        }
+
+        static void AccelerateAllCars()
+        {
+            Console.WriteLine("\n--- Accelerating All Cars ---");
+            foreach (string plate in road.carsOnRoad)
+            {
+                Car car = road.cars[plate];
+                car.Accelerate(10);
+                Console.WriteLine($"{plate} accelerated to {car.Speed} km/h.");
+            }
+        }
+
+        static void ToggleTop()
+        {
+            string plate;
+            int index;
+            bool isValidCar = SelectCar(out plate, out index);
+            if (!isValidCar)
+            {
+                return;
+            }
+            Console.WriteLine("\n--- Retract/Extend Convertible Top ---");
+            Car car = road.cars[plate];
+            Convertible cc = car as Convertible;
+            if (cc != null && cc.IsTopUp )
+            {
+                Console.WriteLine($"{plate} ({cc.Model}): {cc.RetractTop()}");
+            }
+            else if (cc != null)
+            {
+                Console.WriteLine($"{plate} ({cc.Model}): {cc.ExtendTop()}");
+            }
+            else
+            {
+                Console.WriteLine($"{plate} is not a convertible.");
+            }
         }
 
         static void AddCar()
@@ -69,6 +118,9 @@ namespace CarsOnRoad
             Console.Write("Enter colour: ");
             string colour = Console.ReadLine();
 
+            Console.WriteLine("Is the car a convertible? (yes/no)");
+            string isConvertible = Console.ReadLine().Trim().ToLower();
+
             try
             {
                 Console.Write("Enter top speed: ");
@@ -83,7 +135,21 @@ namespace CarsOnRoad
                     return;
                 }
 
-                Car newCar = new Car(make, model, colour, topSpeed, currentSpeed);
+                Car newCar = null;
+                if (isConvertible == "yes")
+                {
+                    Console.WriteLine("Enter top type (Soft/Hard/Retractable): ");
+                    string topTypeInput = Console.ReadLine().Trim();
+                    TopType topType;
+                    if (!Enum.TryParse(topTypeInput, true, out topType))
+                    {
+                        Console.WriteLine("Invalid top type. Defaulting to Soft.");
+                        topType = TopType.Soft;
+                    }
+                    newCar = new Convertible(make, model, colour, topSpeed, currentSpeed, topType);
+                }
+                else
+                    newCar = new Car(make, model, colour, topSpeed, currentSpeed);
 
                 
 
@@ -124,7 +190,9 @@ namespace CarsOnRoad
                 Console.WriteLine("1. View road");
                 Console.WriteLine("2. Attempt overtake");
                 Console.WriteLine("3. Add new car");
-                Console.WriteLine("4. Exit");
+                Console.WriteLine("4. Accelerate all cars");
+                Console.WriteLine("5. Retract top");
+                Console.WriteLine("6. Exit");
 
                 Console.Write("Choose an option: ");
                 string choice = Console.ReadLine();
@@ -136,8 +204,13 @@ namespace CarsOnRoad
                     //Console.WriteLine("Under Construction");
                 else if (choice == "3")
                     AddCar();
-                    //Console.WriteLine("Under Construction");
+                //Console.WriteLine("Under Construction");
                 else if (choice == "4")
+                    AccelerateAllCars();
+                else if (choice == "5")
+                    ToggleTop();
+                //Console.WriteLine("Under Construction");
+                else if (choice == "6")
                 {
                     Console.WriteLine("Goodbye!");
                     break;

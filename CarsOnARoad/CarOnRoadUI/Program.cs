@@ -96,6 +96,50 @@ namespace CarsOnRoad
             }
         }
 
+        enum SortCriterion
+        {
+            ByMake = 1,
+            ByModel = 2,
+            BySpeed = 3,
+            ByColour = 4,
+            ByTopSpeed = 5
+        }
+
+        static void SortCars()
+        {
+            Console.WriteLine("How would you like to sort the cars?");
+            Console.WriteLine("1. By Make");
+            Console.WriteLine("2. By Model");
+            Console.WriteLine("3. By Speed");
+            Console.WriteLine("4. By Colour");
+            Console.WriteLine("5. By Top Speed");
+            int sortCriterion = (int)Enum.Parse(typeof(SortCriterion), Console.ReadLine().Trim());
+
+            switch (sortCriterion)
+            {
+                case (int)SortCriterion.ByMake:
+                    road.carsOnRoad.Sort((a, b) => Car.CarMakeComparer.Compare(road.cars[a], road.cars[b]));
+                    break;
+                case (int)SortCriterion.ByModel:
+                    road.carsOnRoad.Sort((a, b) => Car.CarModelComparer.Compare(road.cars[a], road.cars[b]));
+                    break;
+                case (int)SortCriterion.BySpeed:
+                    road.carsOnRoad.Sort((a, b) => Car.CarSpeedComparer.Compare(road.cars[a], road.cars[b]));
+                    break;
+                case (int)SortCriterion.ByColour:
+                    road.carsOnRoad.Sort((a, b) => Car.CarColourComparer.Compare(road.cars[a], road.cars[b]));
+                    break;
+                case (int)SortCriterion.ByTopSpeed:
+                    road.carsOnRoad.Sort((a, b) => road.cars[a].CompareTo(road.cars[b]));
+                    break;
+                default:
+                    Console.WriteLine("Invalid sort criterion. Sorting by make.");
+                    road.carsOnRoad.Sort((a, b) => Car.CarMakeComparer.Compare(road.cars[a], road.cars[b]));
+                    break;
+            }
+            DisplayRoad();
+        }
+
         static void AddCar()
         {
             Console.WriteLine("\n--- Add New Car ---");
@@ -191,8 +235,9 @@ namespace CarsOnRoad
                 Console.WriteLine("2. Attempt overtake");
                 Console.WriteLine("3. Add new car");
                 Console.WriteLine("4. Accelerate all cars");
-                Console.WriteLine("5. Retract top");
-                Console.WriteLine("6. Exit");
+                Console.WriteLine("5. Toggle top");
+                Console.WriteLine("6. Sort cars");
+                Console.WriteLine("7. Exit");
 
                 Console.Write("Choose an option: ");
                 string choice = Console.ReadLine();
@@ -209,8 +254,10 @@ namespace CarsOnRoad
                     AccelerateAllCars();
                 else if (choice == "5")
                     ToggleTop();
-                //Console.WriteLine("Under Construction");
                 else if (choice == "6")
+                    SortCars();
+                //Console.WriteLine("Under Construction");
+                else if (choice == "7")
                 {
                     Console.WriteLine("Goodbye!");
                     break;

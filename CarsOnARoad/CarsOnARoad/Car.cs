@@ -1,6 +1,8 @@
-﻿namespace CarsOnARoad
+﻿using System.Security.Principal;
+
+namespace CarsOnARoad
 {
-    public class Car
+    public class Car:IComparable<Car>
     {
         public string Make { get;  }
         public string Model { get; set; }
@@ -87,6 +89,98 @@
             return $"{Colour} {Make} {Model} | {this.GetType().Name} | Top Speed: {TopSpeed} | Current Speed: {Speed}";
         }
 
+        public int CompareTo(Car? other)
+        {
+            return (int)(this.TopSpeed - other.TopSpeed);
+        }
 
+        private static IComparer<Car> carSpeedComparer = null;
+
+        public static IComparer<Car> CarSpeedComparer
+        {
+            get
+            {
+                if (carSpeedComparer == null)
+                {
+                    carSpeedComparer = new SpeedComparer();
+                }
+                return carSpeedComparer;
+            }
+        }
+
+        private class SpeedComparer : IComparer<Car>
+        {
+            public int Compare(Car? x, Car? y)
+            {
+                return x.Speed.CompareTo(y.Speed);
+            }
+        }
+
+        private static IComparer<Car> carColourComparer = null;
+
+        public static IComparer<Car> CarColourComparer
+        {
+            get
+            {
+                if (carColourComparer == null)
+                {
+                    carColourComparer = new ColourComparer();
+                }
+                return carColourComparer;
+            }
+        }
+
+        private class ColourComparer : IComparer<Car>
+        {
+            public int Compare(Car? x, Car? y)
+            {
+                return x.Colour.CompareTo(y.Colour);
+            }
+        }
+
+
+        private static IComparer<Car> carModelComparer = null;
+
+        public static IComparer<Car> CarModelComparer
+        {
+            get
+            {
+                if (carModelComparer == null)
+                {
+                    carModelComparer = new ModelComparer();
+                }
+                return carModelComparer;
+            }
+        }
+
+        private class ModelComparer : IComparer<Car>
+        {
+            public int Compare(Car? x, Car? y)
+            {
+                return x.Model.CompareTo(y.Model);
+            }
+        }
+
+        private static IComparer<Car> carMakeComparer = null;
+
+        public static IComparer<Car> CarMakeComparer
+        {
+            get
+            {
+                if (carMakeComparer == null)
+                {
+                    carMakeComparer = new MakeComparer();
+                }
+                return carMakeComparer;
+            }
+        }
+
+        private class MakeComparer : IComparer<Car>
+        {
+            public int Compare(Car? x, Car? y)
+            {
+                return x.Make.CompareTo(y.Make);
+            }
+        }
     }
 }

@@ -85,6 +85,8 @@ namespace CarsOnRoad
 
                 Car newCar = new Car(make, model, colour, topSpeed, currentSpeed);
 
+                
+
                 road.cars[plate] = newCar;
                 road.carsOnRoad.Add(plate);
 
@@ -99,6 +101,23 @@ namespace CarsOnRoad
 
         static void Menu()
         {
+            Car newCar = new Car("Toyota", "Corolla", "Red", 180, 60);
+            Console.WriteLine(newCar.ToString());
+            Car another = new Car("Toyota", "Corolla", "Red", 180, 60);
+            if (newCar.Equals(another))
+            {
+                Console.WriteLine("They are the same car");
+            }
+
+            Convertible cc = new Convertible(colour:"Gold", model: "TT", speed: 50, top: TopType.Soft);
+            Console.WriteLine($"Convertible: {cc.Model}, Colour: {cc.Colour}");
+            Console.WriteLine(cc.RetractTop());
+
+            Car ccc = new Convertible(colour: "Gold", model: "TT", speed: 50, top: TopType.Soft);
+            ((Convertible)ccc).RetractTop();
+            ccc.Accelerate(15);
+            Console.WriteLine(ccc.Speed);
+
             while (true)
             {
                 Console.WriteLine("\n==== Car Road Simulation ====");

@@ -13,7 +13,7 @@ namespace CarsOnARoad
         public Dictionary<string, Car> cars = new Dictionary<string, Car>
         {
             { "AB12CDE", new Car("Ford", "Focus", "Blue", 180, 70) },
-            { "XY34ZRT", new Car("BMW", "320i", "Green", 200, 90 ) },
+            { "XY34ZRT", new Convertible("BMW", "320i", "Green", 200, 90, TopType.Hard ) },
             { "LM56OPQ", new Car("Toyota", "Corolla", "Silver", 80, 60) },
             { "GH78JKL", new Car("Audi", "A4", "Black", 220, 100 ) }
         };
@@ -28,6 +28,12 @@ namespace CarsOnARoad
         {
             if (car.TopSpeed > frontCar.Speed)
             {
+                if (car is Convertible)
+                {
+                    Convertible cc = (Convertible)car;
+                    cc.ExtendTop();
+                }
+
                 // Swap
                 carsOnRoad[index - 1] = plate;
                 carsOnRoad[index] = frontPlate;

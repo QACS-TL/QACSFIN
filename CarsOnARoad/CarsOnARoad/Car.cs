@@ -2,7 +2,7 @@
 {
     public class Car
     {
-        public string Make { get; } 
+        public string Make { get;  }
         public string Model { get; set; }
         private int wheelCount = 4;
         public string Colour { get; set; }
@@ -25,7 +25,7 @@
             set { 
                 if (value < 0)
                 {
-                    value = 0;
+                    throw new Exception("Blah!");
                 }
                 topSpeed = value; 
             }
@@ -67,7 +67,7 @@
             set { wheelCount = value < 0 ? 0 : value; }
         }
 
-        public void Accelerate(int amount)
+        public virtual void Accelerate(int amount)
         {
             speed += amount;
         }
@@ -82,10 +82,10 @@
             return "Beep beep!";
         }
         
-        public override string ToString()
-        {
-            return $"{Colour} {Make} {Model} | Top Speed: {TopSpeed} | Current Speed: {Speed}";
-        }
+        //public override string ToString()
+        //{
+        //    return $"{Colour} {Make} {Model} | Top Speed: {TopSpeed} | Current Speed: {Speed}";
+        //}
 
 
     }

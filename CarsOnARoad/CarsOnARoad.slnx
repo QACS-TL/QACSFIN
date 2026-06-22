@@ -1,5 +1,0 @@
-<Solution>
-  <Project Path="CarOnRoadUI/CarOnRoadUI.csproj" />
-  <Project Path="CarsOnARoad/CarsOnARoad.csproj" />
-  <Project Path="CarsOnARoadTests/CarsOnARoadTests.csproj" />
-</Solution>
